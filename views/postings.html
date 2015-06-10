@@ -1,0 +1,81 @@
+<section id="postings" ng-controller="bloodCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Postings</h2>    
+
+                    <form name="postForm" ng-submit="addPost()">
+                     <!--<p class="bg-success">Press Ctrl+f5 if you don't see the updated chalice location list!</p>-->
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <select id="type" ng-model="fields.type"  class="form-control" ng-init="fields.type = 'Co-op'" required>
+                                    <option >Co-op</option>
+                                    <option >PvP</option>
+                                    <option >Chalice Dungeon</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-6">
+                                <select id="location" ng-model="fields.location" class="form-control" ng-init="fields.location = 'Central Yharnam'" required>
+                                    <option ng-repeat="location in locations">{{location.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <input ng-model="fields.name" type="text" class="form-control" placeholder="Name / PSN-ID" required>
+                            </div>
+                            <div class="col-xs-6">
+                                <input ng-model="fields.level" type="number" class="form-control" placeholder="Level" required>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">   
+                            <div class="col-xs-12">
+                                <input ng-model="fields.note" type="text" class="form-control" placeholder="Notes (eg 'Gyph: qy2yri9z', 'Password: 123456', 'Need help with Vicar!', 'Come fight me bro', 'Pebbles are quite thrilling.', etc..)">
+                            </div>
+                        </div>
+                        <br />
+                      <button type="submit" class="btn btn-default">Submit</button>
+
+                    </form>
+                        <br />   
+                    <table class="table text-center">
+
+                        <thead >
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Location</th>
+                        <th class="text-center">Type</th>
+                        <th class="text-center">Level</th>
+                        <th class="text-center">Level Range</th>
+                        <th class="text-center">Time</th>
+                        </thead>
+                        <hr>
+                        <label>Search:</label><br />
+                        <input ng-model="search">
+                        <br />
+                        <br />
+                        <p class="bg-danger">This is a temporary search while I implement a better filtration system, read more <a href="http://redd.it/321bcp">here.</a></p>
+                        <hr>
+                        <tbody ng-repeat="post in posts | orderBy : '-time' | limitTo: 50 | filter: search">
+                        <tr class="top">
+                            <td>{{post.name}}</td>
+                            <td>{{post.location}}</td>
+                            <td><img src="img/{{post.type}}.png" /></td>
+                            <td>{{post.level}}</td>
+                            <td>{{post.levelrange}}</td>
+                            <!-- <td>{{post.time | millSecondsToTimeString}} ago</td>-->
+                            <td><span am-time-ago="{{post.time}}"></span></td>
+                        </tr>
+                        <tr class="note">
+                            <td colspan="6" class="text-center">{{post.note}}</td>
+                        </tr>
+                        <tr><td> </td></tr>                 
+                        </tbody>
+
+                    </table>
+
+            </div>
+        </div>
+    </div>
+</section>
